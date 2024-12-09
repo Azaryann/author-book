@@ -1,9 +1,9 @@
 package am.azaryan.authorbook.controller;
 
 import am.azaryan.authorbook.entity.Author;
+import am.azaryan.authorbook.exception.ModelNotFoundException;
 import am.azaryan.authorbook.repository.AuthorRepository;
-
-import org.springframework.context.annotation.Bean;
+import am.azaryan.authorbook.service.AuthorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,14 +17,16 @@ import java.util.List;
 public class AuthorController {
 
     private final AuthorRepository authorRepository;
+    private final AuthorService authorService;
 
-    public AuthorController(AuthorRepository authorRepository) {
+    public AuthorController(AuthorRepository authorRepository, AuthorService authorService) {
         this.authorRepository = authorRepository;
+        this.authorService = authorService;
     }
 
     @GetMapping("/authors")
     public String authorPage(ModelMap modelMap) {
-        List<Author> allAuthors = authorRepository.findAll();
+        List<Author> allAuthors = authorService.findAll();
         modelMap.put("authors", allAuthors);
         return "authors";
     }
@@ -41,8 +43,8 @@ public class AuthorController {
     }
 
     @GetMapping("/authors/delete")
-    public String deleteAuthor(@RequestParam("id") int id) {
-        authorRepository.deleteById(id);
+    public String deleteAuthor(@RequestParam("id") int id) throws ModelNotFoundException {
+        authorService.deleteById(id);
         return "redirect:/authors";
     }
 

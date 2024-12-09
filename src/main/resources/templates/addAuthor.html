@@ -7,15 +7,25 @@
 <body>
 <h1>Add Author</h1>
 <form action="/authors/add" method="post">
-    Name: <input type="text" name="name"/> <br>
-    Surname: <input type="text" name="surname"/> <br>
-    Phone: <input type="text" name="phone"/> <br>
-    DateOfBirthday: <input type="date" name="dateOfBirthday"/> <br>
+    Name: <label>
+    <input type="text" name="name"/>
+</label> <br>
+    Surname: <label>
+    <input type="text" name="surname"/>
+</label> <br>
+    Phone: <label>
+    <input type="text" name="phone"/>
+</label> <br>
+    DateOfBirthday: <label>
+    <input type="date" name="dateOfBirthday"/>
+</label> <br>
     Gender:
+    <label>
         <select name="gender">
             <option value="MALE">MALE</option>
             <option value="FEMALE">FEMALE</option>
-        </select> <br>
+        </select>
+    </label> <br>
     <input type="submit" value="Add">
 </form>
 </body>
