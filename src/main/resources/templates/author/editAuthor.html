@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+</head>
+<body>
+Edit Author
+
+<form action="/authors/edit" method="post">
+    <input type="hidden" name="id" th:value="${author.id}">
+    Name: <label>
+    <input type="text" name="name" th:value="${author.name}"/>
+</label> <br>
+    Surname: <label>
+    <input type="text" name="surname" th:value="${author.surname}"/>
+</label> <br>
+    Phone: <label>
+    <input type="text" name="phone" th:value="${author.phone}"/>
+</label> <br>
+    DateOfBirthday: <label>
+    <input type="date" name="dateOfBirthday" th:value="${#dates.format(author.dateOfBirthday, 'yyyy-MM-dd')}"/>
+</label> <br>
+    Gender: <label>
+    <select name="gender">
+        <option value="MALE" th:selected="${author.gender.name() == 'MALE'}">MALE</option>
+        <option value="FEMALE" th:selected="${author.gender.name() == 'FEMALE'}">FEMALE</option>
+    </select>
+</label><br>
+    <input type="submit" value="Edit">
+</form>
+</body>
+</html>

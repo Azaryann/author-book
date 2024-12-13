@@ -6,14 +6,13 @@ import am.azaryan.authorbook.repository.AuthorRepository;
 import am.azaryan.authorbook.service.AuthorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
+@RequestMapping("/authors")
 public class AuthorController {
 
     private final AuthorRepository authorRepository;
@@ -24,25 +23,42 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-    @GetMapping("/authors")
+    @GetMapping
     public String authorPage(ModelMap modelMap) {
         List<Author> allAuthors = authorService.findAll();
         modelMap.put("authors", allAuthors);
-        return "authors";
+        return "author/authors";
     }
 
-    @GetMapping("/authors/add")
+    @GetMapping("add")
     public String addAuthorPage() {
-        return "addAuthor";
+        return "author/addAuthor";
     }
 
-    @PostMapping("/authors/add")
+    @PostMapping("add")
     public String addAuthor(@ModelAttribute Author author) {
         authorRepository.save(author);
         return "redirect:/authors";
     }
 
-    @GetMapping("/authors/delete")
+    @GetMapping("/edit")
+    public String editAuthorPage(@RequestParam("id") int id, ModelMap modelMap) {
+        Optional<Author> authorOptional = authorRepository.findById(id);
+        if (authorOptional.isPresent()) {
+            Author author = authorOptional.get();
+            modelMap.put("author", author);
+            return "author/editAuthor";
+        }
+        return "redirect:/authors";
+    }
+
+    @PostMapping("/edit")
+    public String editAuthor(@ModelAttribute Author author) {
+        authorRepository.save(author);
+        return "redirect:/authors";
+    }
+
+    @GetMapping("/delete")
     public String deleteAuthor(@RequestParam("id") int id) throws ModelNotFoundException {
         authorService.deleteById(id);
         return "redirect:/authors";

@@ -25,7 +25,8 @@
         <td th th:text="${author.getPhone()}"></td>
         <td th th:text="${author.getDateOfBirthday()}"></td>
         <td th th:text="${author.getGender().name()}"></td>
-        <td><a th:href="@{/authors/delete(id=${author.id})}">Delete</a></td>
+        <td><a th:href="@{/authors/edit(id=${author.id})}">Edit</a> | <a th:href="@{/authors/delete(id=${author.id})}">Delete</a>
+        </td>
     </tr>
 </table>
 
